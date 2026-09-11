@@ -1,0 +1,25 @@
+[Unit]
+Description=antibrow-relay
+After=network-online.target
+
+[Service]
+Type=simple
+User=relay
+WorkingDirectory=/opt/antibrow-relay
+EnvironmentFile=/etc/antibrow-relay.env
+# --host binds the admin API and the relay to loopback: TLS has to terminate
+# somewhere in front of this (see docs/DEPLOY.md section 5's Caddy point),
+# and a public bind here means the admin API is reachable in clear text.
+ExecStart=/usr/bin/node dist/cli.js serve --host 127.0.0.1
+Restart=always
+RestartSec=2
+NoNewPrivileges=true
+ProtectSystem=strict
+# Creates and owns /var/lib/antibrow-relay on start, so it does not have to be
+# created by hand - keep this name in sync with .env.example's DB_PATH note
+# and with ReadWritePaths below.
+StateDirectory=antibrow-relay
+ReadWritePaths=/var/lib/antibrow-relay
+
+[Install]
+WantedBy=multi-user.target

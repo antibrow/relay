@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022"],
+    "types": ["@cloudflare/workers-types"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  // The first three entries here are the Worker-only files; keep them identical
+  // to tsconfig.json's "exclude" or a new one falls out of both configs unseen.
+  "include": ["src/worker.ts", "src/adapters/socket-workers.ts", "src/adapters/ws-workers.ts", "src/core", "src/protocol", "src/admin"]
+}

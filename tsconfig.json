@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["ES2022", "DOM"],
+    "types": ["node"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": ["src", "tests"],
+  // Keep this list identical to tsconfig.worker.json's "include": these are the
+  // Worker-only files, checked there instead, against the workers-types lib.
+  "exclude": ["src/worker.ts", "src/adapters/socket-workers.ts", "src/adapters/ws-workers.ts"]
+}

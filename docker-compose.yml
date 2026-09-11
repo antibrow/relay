@@ -1,0 +1,22 @@
+services:
+  relay:
+    image: ghcr.io/antibrow/relay:latest
+    env_file: .env
+    volumes:
+      - relay-data:/data
+    restart: unless-stopped
+
+  # The kernel only connects over wss, so TLS has to terminate somewhere. Caddy
+  # gets a certificate on its own once the DNS record points here.
+  caddy:
+    image: caddy:2
+    ports: ['80:80', '443:443']
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+    depends_on: [relay]
+    restart: unless-stopped
+
+volumes:
+  relay-data:
+  caddy-data:

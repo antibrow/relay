@@ -1,0 +1,20 @@
+name = "antibrow-relay"
+main = "src/worker.ts"
+compatibility_date = "2025-01-01"
+
+[observability]
+logs = { enabled = true }
+
+# Secrets are uploaded with `wrangler secret put`, never written here:
+#   FP_RELAY_KEY  32-byte pre-shared key, base64url. Without it the encrypted
+#                 path is off and every websocket upgrade is closed.
+#   ADMIN_KEY     guards /admin. Without it the whole admin surface answers 404.
+
+[vars]
+# Plaintext mode puts target hostnames on the wire in clear text. Set to "1"
+# only if you deliberately want the unencrypted protocol as well.
+ALLOW_PLAINTEXT = "0"
+
+[[kv_namespaces]]
+binding = "RELAY_STORE"
+id = "replace-with-your-namespace-id"

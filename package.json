@@ -1,0 +1,30 @@
+{
+  "name": "antibrow-relay",
+  "version": "0.1.0",
+  "description": "Free, self-hosted encrypted proxy relay with Cloudflare acceleration or node, built to bypass Fortinet-style filters.",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/antibrow/relay.git" },
+  "homepage": "https://github.com/antibrow/relay#readme",
+  "bugs": "https://github.com/antibrow/relay/issues",
+  "type": "module",
+  "bin": { "antibrow-relay": "./dist/cli.js" },
+  "files": ["dist", "README.md", "LICENSE", "docs"],
+  "engines": { "node": ">=22.13.0" },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && node scripts/fix-esm-extensions.mjs",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "typecheck:worker": "tsc -p tsconfig.worker.json",
+    "deploy": "wrangler deploy",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": { "ws": "^8.18.0" },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250109.0",
+    "@types/node": "^22.10.0",
+    "@types/ws": "^8.5.13",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0",
+    "wrangler": "^4.0.0"
+  }
+}
