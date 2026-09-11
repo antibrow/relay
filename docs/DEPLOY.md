@@ -258,19 +258,26 @@ field - no desktop AntiBrow build reads a raw `relay://` string from its UI.
 JavaScript:
 
 ```js
-await launch({ proxy: 'relay://alice:s3cret@your.domain' })
+await launch({ proxy: 'relay://alice:s3cret@your.domain?key=<your key>' })
 ```
 
 Python:
 
 ```python
-launch(proxy='relay://alice:s3cret@your.domain')
+launch(proxy='relay://alice:s3cret@your.domain?key=<your key>')
 ```
 
 Either SDK hands the URL straight to the AntiBrow kernel's own `--proxy-server`
 option, which understands the `relay` scheme natively with credentials
 embedded in the URL. Swap in the username and password of any account created
-in step 7.
+in step 7, and the pre-shared key from step 1.
+
+`?key=` is not optional in practice. It selects the encrypted protocol - both
+for the browser and for the exit-IP lookup the SDK performs before launch, which
+sets the browser's timezone and WebRTC identity from this relay's exit. Without
+it the URL means the plaintext protocol of section 10, which this deployment
+does not serve unless you turned it on; a malformed key is refused outright
+rather than quietly downgraded.
 
 ## 10. Plaintext mode
 

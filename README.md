@@ -36,15 +36,15 @@ Anything that speaks the relay protocol can connect. Two clients ship today.
 
 ```js
 // npm: anti-detect-browser
-await launch({ proxy: 'relay://alice:s3cret@your.domain' })
+await launch({ proxy: 'relay://alice:s3cret@your.domain?key=<your key>' })
 ```
 
 ```python
 # PyPI: antibrow
-launch(proxy='relay://alice:s3cret@your.domain')
+launch(proxy='relay://alice:s3cret@your.domain?key=<your key>')
 ```
 
-The SDK hands that string straight to the kernel's `--proxy-server` option. It is SDK usage, not something to type into a desktop application's proxy field. Source, install and full documentation: https://github.com/antibrow/antibrow
+`?key=` is the pre-shared key from `keygen`, and it is what selects the encrypted protocol - for the browser itself and for the exit-IP lookup the SDK runs before launch, so the browser's timezone and WebRTC identity follow this relay's exit. Leave it out and the URL asks for the older plaintext protocol, which this relay only serves with `ALLOW_PLAINTEXT=1`; a malformed key is refused rather than downgraded. The SDK hands the string straight to the kernel's `--proxy-server` option. It is SDK usage, not something to type into a desktop application's proxy field. Source, install and full documentation: https://github.com/antibrow/antibrow
 
 **`antibrow-relay probe`**, built into this repo, implements the handshake in TypeScript and fetches one URL through the tunnel. It doubles as the reference client - the shortest complete example of the protocol, in [src/probe.ts](src/probe.ts) - and as the deployment smoke test:
 
